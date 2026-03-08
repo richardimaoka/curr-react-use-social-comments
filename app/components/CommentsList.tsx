@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { Comment } from './data';
-import styles from './CommentsList.module.css';
+import React from "react";
+import styles from "./CommentsList.module.css";
+import { Comment } from "./data";
 
 interface CommentsListProps {
   commentsPromise: Promise<Comment[]>;
@@ -21,7 +21,9 @@ export default function CommentsList({ commentsPromise }: CommentsListProps) {
           {comments.map((comment: Comment) => (
             <li key={comment.id} className={styles.commentItem}>
               <strong>{comment.author}</strong>: {comment.content}
-              <span className={styles.commentTimestamp}>{new Date(comment.timestamp).toLocaleString()}</span>
+              <span className={styles.commentTimestamp}>
+                {comment.timestamp.toLocaleString()}
+              </span>
             </li>
           ))}
         </ul>
