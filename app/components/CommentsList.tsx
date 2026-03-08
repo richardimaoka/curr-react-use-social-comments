@@ -29,7 +29,7 @@ export default function CommentsList({
             <li key={comment.id} className={styles.commentItem}>
               <strong>{comment.author}</strong>: {comment.content}
               <span className={styles.commentTimestamp}>
-                {new Date(comment.timestamp).toLocaleString()}
+                {comment.timestamp}
               </span>
             </li>
           ))}
