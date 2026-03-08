@@ -6,14 +6,21 @@ import { Comment } from "./data";
 
 interface CommentsListProps {
   commentsPromise: Promise<Comment[]>;
+  onClose: () => void;
 }
 
-export default function CommentsList({ commentsPromise }: CommentsListProps) {
+export default function CommentsList({
+  commentsPromise,
+  onClose,
+}: CommentsListProps) {
   const comments = React.use(commentsPromise);
 
   return (
     <div className={styles.commentsListContainer}>
-      <h3>Comments</h3>
+      <button onClick={onClose} className={styles.closeButton}>
+        &times;
+      </button>
+      <h3 className={styles.title}>Comments</h3>
       {comments.length === 0 ? (
         <p>No comments yet.</p>
       ) : (
@@ -22,7 +29,7 @@ export default function CommentsList({ commentsPromise }: CommentsListProps) {
             <li key={comment.id} className={styles.commentItem}>
               <strong>{comment.author}</strong>: {comment.content}
               <span className={styles.commentTimestamp}>
-                {comment.timestamp.toLocaleString()}
+                {new Date(comment.timestamp).toLocaleString()}
               </span>
             </li>
           ))}

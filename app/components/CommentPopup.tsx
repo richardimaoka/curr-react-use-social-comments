@@ -30,21 +30,25 @@ export default function CommentPopup(props: CommentPopupProps) {
 
   return (
     <div className={styles.component}>
-      <div className={`${styles.commentsContainer} ${isOpen ? styles.open : ""}`}>
+      <div
+        className={`${styles.commentsContainer} ${isOpen ? styles.open : ""}`}
+      >
         <React.Suspense fallback={<LoadingSpinner />}>
-          <CommentsList commentsPromise={props.commentsPromise} />
+          <CommentsList
+            commentsPromise={props.commentsPromise}
+            onClose={handleHideComments}
+          />
         </React.Suspense>
       </div>
 
       <div className={styles.uiControls}>
-        <div className={styles.buttonArea}>
-          <button
-            onClick={isOpen ? handleHideComments : handleShowComments}
-            className={styles.button}
-          >
-            {isOpen ? "Hide Comments" : "Show Comments"}
-          </button>
-        </div>
+        {!isOpen && (
+          <div className={styles.buttonArea}>
+            <button onClick={handleShowComments} className={styles.button}>
+              Show Comments
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
