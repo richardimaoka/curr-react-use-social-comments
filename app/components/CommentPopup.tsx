@@ -36,13 +36,15 @@ export default function CommentPopup(props: CommentPopupProps) {
         </React.Suspense>
       )}
 
-      <div className={styles.buttonArea}>
-        <button
-          onClick={isOpen ? handleHideComments : handleShowComments}
-          className={styles.button}
-        >
-          {isOpen ? "Hide Comments" : "Show Comments"}
-        </button>
+      <div className={styles.uiControls}>
+        <div className={styles.buttonArea}>
+          <button
+            onClick={isOpen ? handleHideComments : handleShowComments}
+            className={styles.button}
+          >
+            {isOpen ? "Hide Comments" : "Show Comments"}
+          </button>
+        </div>
       </div>
     </div>
   );

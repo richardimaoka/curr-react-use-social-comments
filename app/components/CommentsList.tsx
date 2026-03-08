@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Comment } from './data';
+import styles from './CommentsList.module.css';
 
 interface CommentsListProps {
   commentsPromise: Promise<Comment[]>;
@@ -11,16 +12,16 @@ export default function CommentsList({ commentsPromise }: CommentsListProps) {
   const comments = React.use(commentsPromise);
 
   return (
-    <div className="comments-list-container">
+    <div className={styles.commentsListContainer}>
       <h3>Comments</h3>
       {comments.length === 0 ? (
         <p>No comments yet.</p>
       ) : (
         <ul>
           {comments.map((comment: Comment) => (
-            <li key={comment.id} className="comment-item">
+            <li key={comment.id} className={styles.commentItem}>
               <strong>{comment.author}</strong>: {comment.content}
-              <span className="comment-timestamp">{new Date(comment.timestamp).toLocaleString()}</span>
+              <span className={styles.commentTimestamp}>{new Date(comment.timestamp).toLocaleString()}</span>
             </li>
           ))}
         </ul>
