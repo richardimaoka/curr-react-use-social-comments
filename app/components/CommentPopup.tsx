@@ -30,11 +30,11 @@ export default function CommentPopup(props: CommentPopupProps) {
 
   return (
     <div className={styles.component}>
-      {isOpen && (
+      <div className={`${styles.commentsContainer} ${isOpen ? styles.open : ""}`}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <CommentsList commentsPromise={props.commentsPromise} />
         </React.Suspense>
-      )}
+      </div>
 
       <div className={styles.uiControls}>
         <div className={styles.buttonArea}>
