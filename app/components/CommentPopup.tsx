@@ -1,56 +1,49 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import CommentsList from './CommentsList';
-import { fetchComments, Comment } from './data';
+import React, { useState } from "react";
+import styles from "./CommentPopup.module.css";
+import CommentsList from "./CommentsList";
+import { Comment } from "./data";
 
 function LoadingSpinner() {
   return (
-    <div style={{ padding: '10px', textAlign: 'center', color: '#555' }}>
+    <div style={{ padding: "10px", textAlign: "center", color: "#555" }}>
       Loading comments...
     </div>
   );
 }
 
 interface CommentPopupProps {
-  videoId: string;
+  commentsPromise: Promise<Comment[]>;
 }
 
-export default function CommentPopup({ videoId }: CommentPopupProps) {
-  const [commentsPromise, setCommentsPromise] = useState<Promise<Comment[]> | null>(null);
+export default function CommentPopup(props: CommentPopupProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleShowComments = () => {
-    if (!commentsPromise) {
-      setCommentsPromise(fetchComments(videoId));
-    }
+    setIsOpen(true);
   };
 
   const handleHideComments = () => {
-    setCommentsPromise(null);
+    setIsOpen(false);
   };
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px', maxWidth: '600px', margin: '20px auto' }}>
-      <button 
-        onClick={commentsPromise ? handleHideComments : handleShowComments}
-        style={{ 
-          padding: '10px 15px', 
-          backgroundColor: '#007bff', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px', 
-          cursor: 'pointer',
-          fontSize: '16px'
-        }}
-      >
-        {commentsPromise ? 'Hide Comments' : 'Show Comments'}
-      </button>
-
-      {commentsPromise && (
+    <div className={styles.component}>
+      {isOpen && (
         <React.Suspense fallback={<LoadingSpinner />}>
-          <CommentsList commentsPromise={commentsPromise} />
+          <CommentsList commentsPromise={props.commentsPromise} />
         </React.Suspense>
       )}
+
+      <div className={styles.buttonArea}>
+        <button
+          onClick={isOpen ? handleHideComments : handleShowComments}
+          className={styles.button}
+        >
+          {isOpen ? "Hide Comments" : "Show Comments"}
+        </button>
+      </div>
     </div>
   );
 }
